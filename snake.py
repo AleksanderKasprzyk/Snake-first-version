@@ -3,7 +3,7 @@ import random
 
 game_window_width = 700
 game_window_height = 700
-game_speed = 50
+game_speed = 150
 game_space_size = 50
 game_body_parts = 3
 game_background_color = "#000000"
@@ -86,13 +86,26 @@ def change_direction(new_direction):
         if direction != "up":
             direction = new_direction
 
-def check_collisions():
+def check_collisions(snake):
 
-    pass
+    x, y = snake.coordinates[0]
+
+    if x < 0 or x >= game_window_width:
+        return True
+    elif y < 0 or y >= game_window_height:
+        return True
+
+    for game_body_parts in snake.coordinates[1:]:
+        if x == game_body_parts[0] and y == game_body_parts[1]:
+            return True
+
+    return  False
 
 def game_over():
 
-    pass
+    canvas.delete(ALL)
+    canvas.create_text(canvas.winfo_width()/2, canvas.winfo_height()/2,
+                       font=("console", 70), text="Game Over", fill="red", tags="game")
 
 window = Tk()
 window.title("Snake")
